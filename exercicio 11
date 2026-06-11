@@ -1,0 +1,73 @@
+print("============================")
+print("     CADASTRO DE USÚARIO    ")
+print("============================")
+
+nome = input("Digite seu nome: ")
+email = input("Digite seu email: ")
+idade = input("Digite sua idade: ")
+cidade = input("Digite sua cidade: ")       
+usuario = input("Digite seu nome de usuário: ")
+senha = input("Digite sua senha: ")
+confirmar_senha = input("Confirme sua senha: ")
+
+print("============================")
+print("    VALIDANDO DADOS         ")
+print("============================")
+
+if nome =="":
+    print("o nome não pode ficar vazio")
+elif email =="":
+    print("o email não pode ficar vazio")
+elif idade =="":
+    print("a idade não pode ficar vazia")
+elif cidade =="":
+    print("a cidade não pode ficar vazia")
+elif usuario =="":
+    print("o nome de usuário não pode ficar vazio")
+elif senha =="":
+    print("a senha não pode ficar vazio")
+else: 
+    print("Campos principais preenchidos com sucesso!")
+
+if senha == confirmar_senha:
+    print("As senhas caoincidem.")
+elif senha != confirmar_senha:
+    print("As senhas não coincidem.")
+else:
+    print("Erro na validação da senha.")
+
+print("============================")
+print("       RESUMO FINAL         ")
+print("============================")
+
+print("Nome", nome)
+print("Email", email)
+print("Idade", idade)
+print("Cidade", cidade)
+print("Usuário", usuario)
+
+if idade >= "18":
+    print("Cadastro aprovado para maior de idade.")
+elif idade =="17":
+    print("Cadastro em analise:quase maior de idade.")
+else:
+    print("Cadastro aprovado para menor de idade.")
+
+if "@" in email:
+    print("Email cm formato aparentemente valido.")
+elif "." in email:
+    print("Email pode estar correto, mas vale revisar.")
+else:
+    print("e-mail invalido.")
+
+if len(usuario) >= 5:
+    print("Nome de usuário aceitável.")
+elif len(usuario) >=3:
+    print("Nome de usuário curto, mas aceitavel.")
+else:
+    print("Nome de usuario muito pequeno.")
+
+print("=============================")
+print("    CADASTRO CONCLUIDO       ")
+print("=============================")
+print("Obrigado por se cadastrar    ")
