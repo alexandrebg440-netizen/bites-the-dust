@@ -1,0 +1,23 @@
+# Programa simp-les: a média de dois números
+
+# Define as variaveis com os valores
+numero1 = 10
+numero2 = 20
+
+# Calcula a soma dos dois números
+soma = numero1 + numero2
+
+# Calcula a média dividindo a soma por 2
+media = soma / 2
+
+# Mostra o resultado na tela
+print(f"A média entre {numero1} e {numero2} é: {media}")
+
+# Comentário de multiplas linhas usadno aspas triplas (alternativa)
+"""
+Este programa:
+1. recebe dois numeros
+2. calcula a soma
+3. Divide por 2 para obter a média
+4. exibe o resultado
+"""
