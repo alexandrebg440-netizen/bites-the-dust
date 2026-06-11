@@ -1,0 +1,118 @@
+# =====================================
+# Programação em python para iniciantes
+# =====================================
+
+# Este programa mostra conceitos básicos da programação.
+# ele usa mensagem na tela, entrada de dados e decisões.
+
+print("===============================")
+print(" Aprendendo programação python ")
+print("===============================")
+
+# A programação serve para criar instruções para o computador.
+print("Programar é escrever instruçôes para o computador")
+
+# O print() mostra mensagem de tela
+print("Vamos aprender passo a passo.")
+
+# o input() permite que o usuario digite algo.
+nome = input("Digite seu nome: ")
+
+# gUARDAMOS O VALOR DIGITANDO EM UMA VARIAVEL CHAMADA NOME.
+print("Ola,", nome)
+
+# Variaveis armazenam informações.
+idade = input("Digite sua idade: ")
+
+# o programa tamabem envolve decisões
+#o if verifica uma condição.
+if idade >="18":
+    print("Voce é maior de idade.")
+if idade < "18":
+    print("Voce ainda é menor de idade.")
+
+# Comentarios ajudam explicar o codigo
+# Eles não são executados pelo Python
+
+print("Vamos continuar com mais exemplos.")
+
+# Podemos pedir mais informaçãoes ao usuario
+cidade = input("Digite sua cidade: ")
+print("cidade informada: ", cidade)
+
+# Outra variavel simples.
+curso = input("Qual curso voce esta estudando? ")
+print("Curso escolhido:", curso)
+
+# O computador segue as instruções em ordem.
+print("A programação é lógica e organizada.")
+
+# Podemos explicar que cada linha tem um papel
+print("Cada comando faz uma parte do trabalho.")
+
+# Mais um exemplo de decisão.
+resposta = input("Voce gosta de aprender programação? (sim/nao):")
+
+if resposta == "sim":
+   print("Que otimo! Continue praticando")
+if resposta == "nao":
+   print("Tudo bem! Voce pode aprender aos poucos.")
+
+# a programação tambem ajuda em jogos, sitas e aplicativos.
+print("Python é usado em muitos projetos.")
+
+# Crianmos variaveis com dados do usuario.
+sobrenome = input("Digite seu sobrenome: ")
+print("Seu nome completo é:", nome, sobrenome)
+
+# O computador pode repetir mensagens
+print("Estudar todos os dias ajuda muito.")
+
+# Podemos comparar respostas.
+cor = input("Qual sua cor favorita? ")
+print("Sua cor favotita é:", cor)
+
+#mais um exemplo simples de explicação.
+print("Programar exige prática e atenção")
+
+# if é uma estrutura de decisão.
+pergunta = input ("Voce quer aprender mais? (sim/nao): ")
+
+if pergunta == "sim":
+    print("Excelente! Aprender é um processo continuo.")
+if pergunta == "nao":
+    print("Sem problemas, voce pode voltar depois.")
+
+# Podemos organizar o codigo com mensagens claras.
+print("Agora vamos ver um pequeno resumo.")
+
+# Mostrando dados coletados
+print("Nome:", nome)
+print("Sobrenome:", sobrenome)
+print("Idade:", idade)
+print("Cidade:", cidade)
+print("Curso:", curso)
+print("Cor favorita:", cor)
+
+# Programar é resolver problemas com lógica.
+print("A lógica é muito importante na programação.")
+
+# Python é uma linguagem de programação facil para iniciantes.
+print("Python é uma otima linguagem para começar.")
+
+# O usuario interage com programa.
+print("Voce partyicipou do programa corretamente.")
+
+# Ultima pergunta.
+final = input("Quer continuar estudando Python? (sim/nao)")
+
+if final == "sim":
+    print("Parabens! Continue praticando todos os dias.")
+if final == "nao":
+    print("Tudo bem o importante é não desistir.")
+
+# Encerramento do programa.
+print("==============================================")
+print("              FIM DO PROGRAMA                 ")
+print("==============================================")
+print("Obrigado por aprender programação com Python.")
