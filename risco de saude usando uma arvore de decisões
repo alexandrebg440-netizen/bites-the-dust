@@ -1,0 +1,23 @@
+# Exemplo de codigo para avaliar o risco de saude usando uma arvore de decisões
+ 
+from sklearn.tree import DecisionTreeClassifier
+import sklearn.tree
+
+# Dados de exemplo
+X=[
+    [25, 120], # idade, pressão
+    [60, 180],
+    [35, 130],
+    [70, 190]
+]
+
+y = [0, 1, 0, 1] #0= baixo risco, 1= alto risco
+
+modelo = DecisionTreeClassifier()
+modelo.fit(X, y)
+
+novo_paciente = [[65, 175]]
+
+risco = modelo.predict(novo_paciente)
+
+print("Alto risco" if risco[0] else "Baixo risco")
