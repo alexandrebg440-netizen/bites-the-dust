@@ -1,0 +1,15 @@
+#analise dados paciente com pandas
+import pandas as pd
+
+dados = {
+    "Paciente": ["Ana", "Carlos", "Maria"],
+    "Idade": [25, 40, 35],
+    "Glicose": [90, 140, 110]
+}
+
+df = pd.DataFrame(dados)
+
+print(df)
+
+print("\nMédia da glicose:")
+print(df["Glicose"].mean())
