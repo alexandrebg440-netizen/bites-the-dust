@@ -1,0 +1,61 @@
+# Copie e execute o codigo completo aqui no Python
+import matplotlib.pyplot as mp1
+import networkx as nx
+import os
+
+os.makedirs('output', exist_ok=True)
+
+G = nx.Graph()
+vertices = ['A', 'B', 'C', 'D', 'E', 'F']
+G.add_nodes_from(vertices)
+
+arestas = [
+    ('A', 'B', 4), ('A', 'C', 2), ('B', 'C', 1),
+    ('B', 'D', 5), ('C', 'D', 8), ('C', 'E', 10)
+    ('D', 'E', 3), ('D', 'F', 6), ('E', 'F', 2)
+]
+G.add_weighted_edges_from(arestas)
+
+def dijkstra_caminho_minimo(grafo, inicio, fim):
+    distancias = {v:float('inf') for v in grafo.nodes()}
+    distancias[inicio] = 0
+    predecessores = {v: None for v in grafo.nodes()}
+    vertices_nao_processados = set(grafo.nodes())
+
+    while vertices_nao_processados:
+        vertice_atual = min(vertices_nao_processados, key=lambda v: distancias[v])
+        if vertice_atual == fim or distancias[vertice_atual] == float('inf'):
+            break
+        vertices_nao_processados.remove(vertice_atual)
+
+        for vizinho in grafo.neighbors(vertice_atual):
+            if vizinho not in grafo.neighbors(vertice_atual):
+                continue
+            peso = grafo[vertice_atual][vizinho]['weight']
+            nova_distancia = distancias[vertice_atual] + peso
+            if nova_distancia < distancias[vizinho]:
+                distancias[vizinho] = nova_distancia
+                predecessores[vizinho] = vertice_atual
+
+    caminho = []
+    vertice = fim
+    while vertice is not None:
+        caminho.append(vertice)
+        vertice = predecessores  
+    caminho.reverse()
+
+    return caminho, distancias[fim]
+
+inicio = 'A'
+fim = 'F'
+caminho, distancia = dijkstra_caminho_minimo(G, inicio, fim)
+
+print(f"Caminho minimo de {inicio} para {fim}:{caminho}")
+print(f"Distancia total: {distancia}")
+
+fig = mp1.figure(figsize=(12, 8))
+pos = nx.spring_layout(G, seed=42 , k=1.5)
+
+nx.draw_networkx_edges(G, edge_color='gray', width=1.5, alpha=0.5)
+if len(caminho) > 1:
+    caminho_arestas
