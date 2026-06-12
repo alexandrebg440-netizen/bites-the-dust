@@ -1,0 +1,89 @@
+"""
+SISTEMA DE AGENDAMENTOS DE CONSULTAS MÉDICAS
+FUNCIONALIDADES:
+Agendar consulta
+Listar consultas
+salvar em arquivos
+Carregar consultas ao iniciar
+
+"""
+
+import json
+import os
+
+ARQUIVO = "consultas.json"
+
+#Carrega consultas salvas:
+if os.path.exists(ARQUIVO):
+    with open(ARQUIVO, "r", encoding="utf-8") as f:
+        consultas = json.load(f)
+else:
+    consultas = []
+
+def salvar():
+    with open(ARQUIVO, "w", encoding="utf-8") as f:
+        json.dump(consultas, f, indent=4, ensure_ascii=False)
+
+def agentar():
+    paciente = input("Nome do paciente: ")
+    medico = input("Nome do médico: ")
+    data = input("dd/mm/aaaa: ")
+    hora = input(" Hora(hh:mm): ")
+
+    consulta = {
+        "paciente": paciente,
+        "médico": medico,
+        "data": data,
+        "hora": hora
+
+    }
+
+    consultas.append(consulta)
+    salvar()
+
+    print("\nConsulta agendada com sucesso.\n")
+    return
+
+def listar():
+    if not consultas:
+        print("\nNenhuma consulta cadastrada.\n")
+        return
+    
+    print("\n=== CONSULTAS AGENDADAS ===")
+    for i, c in enumerate(consultas, start=1):
+        print(
+            f"{1}.Paciente: {c['paciente']}"
+            f"Médico: {c['medico']}"
+            f"Data: {c['data']}"
+            f"Hora: {c['hora']}"
+        )
+    print()
+
+while True:
+    print("=== SISTEMA DE CONSULTAS ===\n")
+    print("1 - agendar consulta")
+    print("2 - Listar consultas")
+    print("3 - Sair")
+
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == "1":
+        agendar()
+    elif opcao == "2":
+        listar()
+    elif opcao == "3":
+        print("Encerrado sistema...")
+        break
+    else:
+        print("Opção invalida!\n")
+
+        """
+        Salve como consultas.py
+        Abra o terminal na pasta do arquivo
+        Execute:
+
+        """
+    
+    #python consultas.py
+    # execute com esse comando no terminal para rodar o sistema de agendamento de consulta médica.
+    
