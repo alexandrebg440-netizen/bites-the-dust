@@ -1,0 +1,19 @@
+# controle de paciente em um sitema de saúde
+pacientes = []
+
+while True:
+    nome = input("Nome do paciente: ")
+    idade = input("Idade do paciente: ")
+
+    pacientes.append({
+        "nome": nome,
+        "idade": idade
+    })
+
+    continuar = input("Adicionar outro paciente? (S/N): ")
+    if continuar.lower() != "s":
+        break
+
+print("\nLista de pacientes: ")
+for paciente in pacientes:
+    print(f"{paciente['nome']} - {paciente['idade']} anos")
