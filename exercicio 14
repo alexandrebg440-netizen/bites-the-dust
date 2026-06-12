@@ -1,0 +1,115 @@
+import os
+
+usuarios = []
+senhas = []
+
+# Limpa a tela de acordo com o sistema operacional
+def limpar_tela():
+    os.system('cls' if os.name == 'nt' else ' clear')
+
+# Exibe um cabeçalho bonito
+def cabecalho(titulo):
+    limpar_tela()
+    print("=" * 50)
+    print(titulo.center(50))
+    print("=" *50)
+
+# Exibe uma linha separada
+def linha():
+    print("=" * 50)
+
+# Mostra uma mensagem de destaque
+def destaque(texto):
+    print(f">>> {texto}")
+
+# Programa principal
+while True:
+    cabecalho("SISTEMA DE CADASTRO E LOGIN")
+
+    print("1 - Cadastrar usuário")
+    print("2 - Fazer login")
+    print("3 - Listar usuáeios")
+    print("4 - Sair")
+    linha()
+
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == "1":
+        cabecalho("CADASTRO DE USUÁRIO")
+
+        nome = input("Nome:")
+        email = input("E-mail: ")
+        idade = input("Idade: ")
+        usuario = input("Usuário: ")
+        senha = input("Senha: ")
+        confirmar = input("Confirmar senha: ")
+
+        linha()
+        print("VALIDANDO DADOS...")
+        linha()
+
+        if nome == "":
+            print("Erro: nome vazio")
+        elif email == "":
+            print("Erro: e-mail vazio")
+        elif idade == "":
+            print("Erro: idade vazia.")
+        elif usuario == "":
+            print("Erro: usuario vazio")
+        elif senha == "":
+            print("Erro: senha não pode ficar vazia")
+        elif senha != confirmar:
+            print("Erro: senhas diferentes.")
+        elif usuario in usuarios:
+            print("Erro: usuário já cadastrado")
+        else:
+            usuarios.append(usuario)
+            senhas.append(senha)
+            print("Cadastro realizado com sucesso!")
+            print("Bem-vindo,", nome)
+
+        input("\nPressione Enter para continuar...")
+
+    elif opcao == "2":
+        cabecalho("LOGIN")
+
+        login_usuario = input("Usuário:")
+        login_senha = input("Senha: ")
+
+        linha()
+        print("VERIFICANDO ACESSO...")
+        linha()
+
+        if login_usuario in usuarios:
+            indice = usuario.index(login_usuario)
+            if senhas[indice] == login_senha:
+                print("Login realizado com sucesso!")
+                print("Acesso permintido para:", login_usuario)
+            else:
+                print("Erro: senha incorreta.")
+        else:
+            print("Erro: usuário não encontrado.")
+
+        input("\nPressione Enter para continuar...")
+
+    elif opcao == "3":
+        cabecalho("USUÁRIOS CADASTRADOS")
+
+        if len(usuarios) == 0:
+            print("Nenhum usuário cadastrado.")
+        else:
+            for i, u in enumerate(usuarios, start=1):
+                print(f"{i}. {u}")
+        
+        input("\nPressione Enter para continuar...")
+
+    elif opcao == "4":
+        cabecalho("SAINDO DO SISTEMA")
+        destaque("Obrigado por usar o programa.")
+        break
+
+    else:
+        cabecalho("OPÇÃO INVÁLIDA")
+        print("Escolha uma opção de 1 a 4.")
+        input("\nPressione Enter para continuar...")
+print("Programa encerrado.")  
