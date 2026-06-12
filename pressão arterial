@@ -1,0 +1,13 @@
+#Pressão arterial
+
+sistolica = int(input("Pressão sistólica: "))
+diastolica = int(input("Pressão diastólica: "))
+
+if sistolica < 120 and diastolica < 80:
+    print("Pressão normal")
+elif sistolica <140 and diastolica < 90:
+    print("Pressão elevada")
+elif sistolica <160 and diastolica < 100:
+    print("procura um medico")
+else:
+    print("Voce vai morrer - corre no medico")
