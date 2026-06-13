@@ -29,7 +29,7 @@ def dijkstra_caminho_minimo(grafo, inicio, fim):
         vertices_nao_processados.remove(vertice_atual)
 
         for vizinho in grafo.neighbors(vertice_atual):
-            if vizinho not in grafo.neighbors(vertice_atual):
+            if vizinho not in vertices_nao_processados:
                 continue
             peso = grafo[vertice_atual][vizinho]['weight']
             nova_distancia = distancias[vertice_atual] + peso
@@ -41,7 +41,7 @@ def dijkstra_caminho_minimo(grafo, inicio, fim):
     vertice = fim
     while vertice is not None:
         caminho.append(vertice)
-        vertice = predecessores  
+        vertice = predecessores[vertice]  
     caminho.reverse()
 
     return caminho, distancias[fim]
@@ -56,6 +56,19 @@ print(f"Distancia total: {distancia}")
 fig = mp1.figure(figsize=(12, 8))
 pos = nx.spring_layout(G, seed=42 , k=1.5)
 
-nx.draw_networkx_edges(G, edge_color='gray', width=1.5, alpha=0.5)
+nx.draw_networkx_edges(G, pos, edge_color='gray', width=1.5, alpha=0.5)
 if len(caminho) > 1:
-    caminho_arestas
+    caminho_arestas = [(caminho[i], caminho[i+1]) for i in range(len(caminho)-1)]
+    nx.draw_networkx_edges(G, pos, edgelist=caminho_arestas, edge_color='red', width=3)
+
+nx.draw_networkx_nodes(G, pos, node_color='lightblue', node_size=800, edgecolors='black',linewidths=2)
+nx.draw_networkx_labels(G, pos, font_size=14, font_weight='bold')
+
+edge_labels = {(u, v): str(G[u][v]['weight']) for u, v in G.edges()}
+nx.draw_networkx_edge_labels(G, pos, edge_labels=edge_labels, font_size=10)
+
+mp1.title(f"Caminho Minimo com Dijkstra: {inicio} -> {fim} (Distancia: {distancia})", pad=20, fontsize=16, fontweight='bold')
+mp1.tight_layout()
+
+fig.savefig('output/dijkstra_caminho.png', dpi=150, bbox_inches='tight')
+print("Imagem salva em: output/dijkstra_caminho.png")
