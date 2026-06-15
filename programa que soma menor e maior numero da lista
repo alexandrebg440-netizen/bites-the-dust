@@ -1,0 +1,13 @@
+#fazer um programa que, que dado conjunto de N, numeros, determine o menor valor, o maior e a soma dos valores:
+lista=[11,22,33]
+qty_num = int(input("Digite seu número: "))
+
+for i in range(qty_num):
+    num = int(input(f'digite o {i+1} o número '))
+print (f'''
+      
+o maior numero é {max(lista)}
+o menor numero é {min(lista)}
+a suma total é {sum(lista)}
+
+''')     
