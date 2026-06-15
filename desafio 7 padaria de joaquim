@@ -1,0 +1,30 @@
+# o Sr manuel joaquim acaba de adquiri  uma panificadora e pretende implementar a metodolodia da tabelinmha< que já é um sucesso na sua loja de 1,99. Você foi contratado para desenvolver o programa que monta a tabela de preços de pães de 1 ate 50 pães, a partir do preço do pão informado pelo usuario, confrome o exemplo abaixo:
+#OBS: Caso o cliente comprar mais de 10 pãoes e menos de 30, terá um desconto de 5% dop valor.Agora, se a compra for acima de 10 pães o dsconto sobe para 10%.
+#preço do pão é 0.50
+#panificadora Pão de Ontem -  tabela de preço
+
+#1 - R$0.18
+#2 - R$0.36
+#...
+#50 - R$9.009
+
+qtyBreads = int(input('Quantidade de pães: '))
+
+while qtyBreads > 50:
+    qtyBreads = int(input('Só até 50 pães: '))
+
+for i in range(qtyBreads):
+    subtotal = (i+1) * 0.50
+
+    if 10 < qtyBreads < 30:
+        desconto = subtotal * 0.05
+        total = subtotal - desconto
+
+    elif qtyBreads > 30:
+        desconto = subtotal * 0.10
+        total = subtotal - desconto
+
+    else: 
+        total = subtotal
+
+    print(f'{i+1} - R$ {total:.2f}')
