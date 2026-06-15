@@ -1,0 +1,15 @@
+#Exercicio 5
+# faça um programa que calcule o calor total investido por um colecionador a sua coleçâo de CDs e o valor médio gasto em cada um deles. o usuario deverá informar a qunatidade de CDs e o valor para em cada um.
+
+qty_cds = int(input('CDs comprados: '))
+
+cds = []
+
+for i in range(qty_cds):
+    price = float(input(f'Preço do {i+1} CD: '))
+
+media = (sum(cds) / qty_cds)
+
+print(f'Total de CDs: {qty_cds}\n'
+      f'Valor da coleção: RS{sum(cds): .2f}\n'
+      f'Valor Médio:R${media:.2f}.')
