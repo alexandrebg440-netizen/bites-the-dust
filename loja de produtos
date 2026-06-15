@@ -1,0 +1,17 @@
+# o Sr. Manuel Joaquin possui uma grande loja de artigos de R$1.99,com cerca de 10 caixas. Para agilizar o calculo de aquanto cada item que o cliente comprou e ao lado o valor de conta. Desta forma a atendente do caixa precisa apenas contar quantos itens o cliente está levando e olhar na tabela de preços. Voce foi contratado para desemvolver o programa que monta esta tabela de preços. que conteráos preços de 1 até 50 produtos. conforme o exemplo:
+
+# Lojas quase dois - Tabela de preços
+
+#1 - R$ 1.99
+#2 - R$ 3.98
+#...
+#50 - R$99.50
+
+qtyProducts = int(input('Quantos produtos comprou? '))
+
+while qtyProducts > 50:
+    qtyProducts = int(input("Somente até 50 produtos: "))
+
+for i in range(qtyProducts):
+    total = (i+1)* 1.99
+    print(f'{i+1} - R$ {total:.2f}')
