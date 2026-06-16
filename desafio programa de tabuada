@@ -1,0 +1,32 @@
+#desenvolva um programa que faça a tabuaada de um numero qualquer inteiro que sera digitado pelo usuario, mas a tabuada não deve necessariamente iniciar 1 e terminmar em 10, o valor inicial e dinal devem ser informados tambem pelo usuario, conforme exemplo abaixo
+
+#Montar a tabuada de 5:
+#começar por: 4
+#terminar em: 7
+
+#vou montar a tabuada de 5 começando  em 4 e terminando em 7
+
+#5 x 4 = 20
+#5 x 5 = 25
+#5 x 6 = 30
+#5 x 7 = 35
+
+#Obs: Voce deve verificar se o usuario não digitou o final menort que o inicial
+
+from time import sleep
+
+base = int(input('Montar a tabuada de: '))
+initial = int(input('Começar em: '))
+final = int(input(' terminar em: '))
+
+while initial > final:
+    initial = int(input('O inicio deve ser menor: '))
+    final = int(input('Termina em: '))
+
+sleep(0.7)
+print(f'Tabuada de {base} começando d=em {initial} e terminando em {final}: ')
+
+sleep(1)
+for c in range(initial, final+1):
+    print(f'{base} X {c} = {base*c}')
+    sleep(1)
