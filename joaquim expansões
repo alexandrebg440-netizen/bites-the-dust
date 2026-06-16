@@ -1,0 +1,32 @@
+#O sr.Manoel Joaquim expandiu seus negocios para alem dos negocios de 1.99 e agora possue uma loja de conveniencias
+
+#Faça um programa que implemente uma caixa refistradora rudimentar. o programa deveráz\ receber um número desconhecido de valores referentes aos preços dos itens. o Usuario deverá informar a quaqntidade de itens e seus calores . o programa deve então mostarr o local da comrpa e perguntar ovalor do troco. Apos isso ao programa deverá voltar ao ponto inicial, para registrar a proxima compra. a saida deve ser conforme o exemplo abaixo
+
+#produto 1: R$2:20
+#produto 2: R$5.80
+#produto 3: R$1.00
+# total: R$9.00
+# dinheiro: R$20.00
+# troco: R$11.00
+
+print('Bem vindo às Lojas tabajara!\n')
+
+while True:
+    qty_items = int(input('Quantidade de itens: '))
+
+    items = []
+    for i in range(qty_items):
+        price = float(input(f'Preço do {i+1} item: '))
+        items.append(price)
+
+    print(f'Total: R$ {sum(items):.2f}')
+
+    pay = float(input('Quanto em dinheiro? '))
+    print(f'Troco: R$ {(pay - sum(items)):.2f}')
+
+    answer = str(input('Deseja cantinuar? [S/N]')).lower()
+
+    if answer in 's':
+        pass
+    else:
+        print("Obrigado e até a proxima!!")
