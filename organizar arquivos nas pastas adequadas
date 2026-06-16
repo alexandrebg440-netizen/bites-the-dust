@@ -1,0 +1,70 @@
+import os
+import shutil
+
+#Defina a pasta que está bagunçada
+pasta_alvo = r"C:\Users\AlexandreBorgesGalva\Downloads"
+
+#Verificar se a pasta existye
+if not os.path.exists(pasta_alvo):
+    print(f"ERRO: Pasta '{pasta_alvo}' não existe!")
+    print(f"Caminho atual: {os.getcwd()}")
+    #Tenta usar pasta downloads do usuario atual
+    pasta_alvo = os.path.join(os.environ['USERPROFILE'], 'Downloads')
+    print(f"Usando pasta: {pasta_alvo}")
+
+regras = {
+    "documentos":["pdf", "docx", "txt"],
+    "imagens": ["jpg", "jpeg", "png", "gif"],
+    "videos": ["mp4", "avi", "mkv"],
+    "musicas": ["mp3", "wav"],
+    "planilhas": ["xlsx", "csv"]
+}
+
+#Verifica quantos arquivos existem
+arquivo = os.listdir(pasta_alvo)
+print(f"Foi encontrado {len(arquivo)} arquivo(s) na pasta Downloads")
+
+organizados = 0
+
+for arquivos in os.listdir(pasta_alvo):
+    caminho_arquivo = os.path.join(pasta_alvo, arquivo)
+
+    #Ignora pastas
+    if not os.path.isfile(caminho_arquivo):
+        continue
+
+    nome, extensao = os.path.splitext(arquivo)
+    extensao = extensao.lower().replace(".", "")
+
+    #se não tem extensão, ignora
+    if extensao == "":
+        print(f"Ignorando arquivos sem extensão: {arquivo}")
+        continue
+    encontrou = False
+
+    for pasta, lista_extensao in regras.items():
+        if extensao in lista_extensao:
+            pasta_destino = os.path.join(pasta_alvo, pasta)
+
+            #Criar pasta se não existe
+            os.makedirs(pasta_destino, exist_ok=True)
+
+            print(f"Movendo '{arquivo}' '{pasta}/'")
+
+            shutil.move(
+                caminho_arquivo,
+                os.path.join(pasta_destino, arquivo)
+            )
+
+            organizados += 1
+            encontrou = True
+            break
+
+    if not encontrou:
+        print(f"Tipo não reconhecido para:{arquivo} (.{extensao})")
+
+print("=" * 50)
+print(f"ORGANIZAÇÃO CONCLUIDA!")
+print(f"organizados: {organizados} arquivo(s)")
+print(f"Pasta: {pasta_alvo}")
+print("=" * 50)
