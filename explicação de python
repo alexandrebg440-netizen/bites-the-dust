@@ -1,0 +1,202 @@
+"""
+Programa de explicaçoes sobre python
+====================================
+Este programa ensina os conceitos de python com exemplos praticos
+"""
+
+from turtle import home
+
+def explication_python():
+    '''
+    função prinicpal que explica oque é python e seus conceitos basicos
+    '''
+
+    print('=' * 60)
+    print(" BEM-VINDO AO CURSO INTRODUTIVO DE PYTHON!")
+    print("=" * 60)
+    print()
+
+    # O que é Python
+    print("### O que é Python? ###")
+    print()
+    print(" Python é uma linguagem de programação: ")
+    print("  *interpretada (Não executa codigo compilado)")
+    print("  * de alto nivel (fácil de entender)")
+    print("  * Multipropósito(web, dados, automação, IA)")
+    print("  * com sintaxe simples e legível")
+    print("  * Criada por Guido van Rossum em 1991")
+    print()
+    print("Nome vem do show 'Monty Pythons Flying Circus', não de serpente!")
+    print()
+
+    #exemplo 1: Variaveis e tipos
+    print("### 1. VARIAVEIS E TIPOS DE DADOS ###")
+    print()
+
+    #String
+    nome = "Python"
+    print(f"String: nome = '{nome}'")
+    print(f" Tipo: {type(nome)}")
+    print()
+
+    #Inteiro
+    idade = 33
+    print(f'Inteiro: idade = {idade}')
+    print(f" Tipo {type(nome)}")
+    print()
+
+    #Float
+    pi = 3.14159
+    print(f"Float: pi = {pi}")
+    print(f"  Tipo: {type(pi)}")
+
+    #Booleano
+    é_facil = True
+    print(f"Booleano: é_facil ={é_facil}")
+    print(f"  Tipo: {type(é_facil)}")
+    print()
+
+    # Exemplo 2: Estrutura de dados
+    print("### 2 . ESTRUTURA DE DADOS ###")
+    print()
+
+    #LISTA
+    lista = [1, 2, 3, 4, 5]
+    print(f"Lista = {lista}")
+    print(f" primrito elemnto: {lista[0]}")
+    print(f" Adicionar 6: {lista + [6]}")
+    print()
+
+    #Dicionario
+    dicionario = {"nome": "Python", "versao":3.12, "ano":2026}
+    print(f"Dicionario: {dicionario}")
+    print(f" Nome {dicionario['nome']}")
+    print(f" Versao:{dicionario['versao']}")
+
+    #Exemplo 3:Estruturas condicionais
+    print("### e . ESTRUTURAS CONDICIONAIS (if/else) ###")
+    print()
+
+    nota = 85
+    print(f"Nota: {nota}")
+
+    if nota >= 90:
+        classificacao = "A"
+    elif nota >= 80:
+        classificacao = "B"
+    elif nota >= 70:
+        classificacao = "C"
+    else:
+        classificacao = "D"
+
+    print(f" classificação: {classificacao}")
+    print(" Syntax: if/elif/else com indentação!")
+    print()    
+    
+    #Exemplo 4: loops
+    print("### 4. LOOPS (for/while) ###")
+    print()
+
+    print("Loop for - contar de 1 a 5")
+    for i in range(1, 6):
+        print(f" {i}", end="")
+    print()
+    print()
+
+    print("Loop while - contart de 3 a 0")
+    contador = 3
+    while contador > 0:
+        print(f" {contador}", end="")
+        contador -= 1 
+    print()
+    print()
+
+    #Exemplo 5: Funções 
+    print("### 5. FUNÇões ###")
+    print()
+
+    def saudacao(nome, linguagem="Python"):
+        """Funçao que retorna uma mensagem de saudação"""
+        return f"Ola, {nome}! Bem-vindo a {linguagem}"
+    
+    mensagem = saudacao("Estudante")
+    print(f"Função: saudacao ('Estudante')")
+    print(f" Resultado:'{mensagem}'")
+    print()
+
+    def calcular_area(largura, altura):
+        """Calcula área de um retangulo"""
+        return largura * altura
+    
+    area = calcular_area(5, 3)
+    print(f"Função: calcular_area(5, 3)")
+    print(f" Área: {area}")
+    print()
+
+    #Exemplo 6:List comprehension
+    print("### 6. LIST COMPREHENSION(feature poderosa!)###")
+    print()
+
+    numeros = [1, 2, 3, 4, 5]
+    quadrados = [x**2 for x in numeros]
+
+    print(f"Números: {numeros}")
+    print(f"Quadrados: {quadrados}")
+    print(" Syntax: [expressao for item in lista]")
+    print()
+
+    #exemplo 7 : Manipulação de Erros
+    print("### 7. MANUPULAÇÃO DE ERROS (TRY/EXCEPT)###")
+    print()
+
+    def dividir(a, b):
+        """Divide dois números com tratamento de erro"""
+        try:
+            resultado = a / b
+            return resultado
+        except ZeroDivisionError:
+            return "Erro: divisão por zero!"
+        except TypeError:
+            return "Erro: tipos invalidos"
+        
+    print(f"dividir(10, 2) = {dividir(10, 2)}")
+    print(f"dividir(10, 0) = {dividir(10, 0)}")
+    print(f"dividir(10, 'a') = {dividir(10, 'a')}")
+    print()
+
+    # Por que Python?
+    print("### POR QUE APRENDER PYTHON? ###")
+    print()
+
+    print("### POE QUE APRENDER PYTHON? ###")
+    print()
+    print("Facil de aprender (sintaxe simples)")
+    print(" popular (milhoes de usuarios)")
+    print(" versátil( web, dados, ia, automação)")
+    print("bom para iniciantes e profissionais")
+    print('carreiras bem remuneradas')
+    print()
+
+    # Recursos para aprender 
+    print("### RECUSOS PARA APRENDER PYTHON ###")
+    print()
+    print("* documentação odifical:Python.org")
+    print("* curso gratuito: Coursera, edx, freeCodeCamp")
+    print("Praticas: hackerrank, LeetCode, Codewars")
+    print(" Biblioteca populares:")
+    print(' - NumPy/Pandas(dados)')
+    print(" - request(web)")
+    print(' - Flask/Django (web)')
+    print(" - tensonFlow/Pytorch(iA)")
+    print(" - Matplotlib/Seaborn(visualização)")
+    print()
+
+    print("=" * 60)
+    print("AGORA VOCE SABE OP BASICO DE PYTHON!")
+    print("  CONTINUE PRATICANDO E EXPLORANDO!")
+    print("=" * 60)
+
+    #executar o programa
+    if __name__ == "__main__":
+        explication_python()
+        
