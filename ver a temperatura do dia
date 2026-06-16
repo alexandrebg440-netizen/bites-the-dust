@@ -1,0 +1,15 @@
+qty_temp =  int(input("Quantos dias: "))
+
+temp_list = []
+for i in range(qty_temp):
+    temperaturas = int(input(f'Tempo no {i+1} dia '))
+
+    temp_list.append(temperaturas)
+
+print(temp_list)
+
+media = (sum(temp_list) / qty_temp)
+
+print(f'Maxima de {max(temp_list):.0f} C' 
+      f'Minima de {min(temp_list):.0f} C' 
+      f' Média de {media:.0f} C.')
