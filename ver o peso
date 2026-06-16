@@ -1,0 +1,32 @@
+cods = []
+heights = []
+weigths = []
+num = 1
+code = True
+while code != 0:
+    print(f'Cliente n {num}')
+    code = int(input("Digite o código: ")) 
+
+    if code == 0:
+        break
+    else:
+        height = float(input('Digite a altura: '))
+        weight = float(input('Digite o peso: '))
+        cods.append(code)
+        height.append(height)
+        weight.append(weight)
+        num += 1
+
+thin = weight.index(min(weight))
+fat = weight.index(max(weight))
+tall = height.index(max(height))
+short = height.index(min(height))
+
+print(
+    f'codigo + magro: {cods(thin)}\n'
+    f'codigo + gordo: {cods(fat)}\n'
+    f'codigo + alto: {cods(tall)}\n'
+    f'codigo + baixo: {cods(short)}\n'
+    f'Media altura: {sum(height) / len(height):.2f}\n '
+    f'Media peso: {sum(weight) / len(weight):.2f}\n '
+)
