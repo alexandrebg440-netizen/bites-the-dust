@@ -60,9 +60,9 @@ def tocar_som(tipo):
             winsound.Beep(200, 300) # Som grave longo
         elif tipo == "recorde":
             #Melodia de vitória
-            winsound.Beep(523, 100) #Dó
-            winsound.Beep(659, 100) #Mi
-            winsound.Beep(784, 100) #Sol
+            winsound.Beep(523, 100)  #Dó
+            winsound.Beep(659, 100)  #Mi
+            winsound.Beep(784, 100)  #Sol
             winsound.Beep(1047, 100) #Dó alto
         elif tipo == "inicio":
             winsound.Beep(440, 150)
@@ -85,7 +85,7 @@ tela.tracer(0)
 tela_mensagem = turtle.Turtle()
 tela_mensagem.speed(0)
 tela_mensagem.color("white")
-tela_mensagem.penup
+tela_mensagem.penup()
 tela_mensagem.hideturtle()
 
 #configuração da cobrinha
@@ -427,7 +427,7 @@ tela.onkeypress("ir_baixo", "Down")
 tela.onkeypress("ir_esquerda", "Left")
 tela.onkeypress("ir_direita", "Right")
 tela.onkeypress("ir_cima", "w")
-tela.onkeypress("ir_baixo","s")
+tela.onkeypress("ir_baixo", "s")
 tela.onkeypress("ir_esquerda", "a")
 tela.onkeypress("ir_direita", "d")
 tela.onkeypress("pausar_jogo", "p")
@@ -539,4 +539,5 @@ while True:
 
     time.sleep(velocidade_jogo)
 
+tela.mainloop()
 tela.mainloop()
