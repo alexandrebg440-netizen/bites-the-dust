@@ -1,0 +1,288 @@
+# importação das bibliotecas necessarias
+import turtle
+import time
+import random
+import os
+
+# Tentar importar winsound paraq son (windows)
+try:
+    import winsound
+    SOM_DISPONIVEl = True
+except ImportError:
+    SOM_DISPONIVEl = False
+
+#Arquivo para salvar o record
+ARQUIVO_RECORDE = "recorde.txt"
+
+#Configurações de dificuldade
+DIFICULDADES = {
+    "1": {"nome": "Fácil", "velocidade": 0.15, "cor_fundo": "dark green"},
+    "2": {"nome": "Médio", "velocidade": 0.1, "cor_fundo": "dark blue"},
+    "3": {"nome": "Difícil", "velocidade": 0.06, "cor_fundo": "dark red"},
+    "4": {"nome": "Impossível", "velocidade": 0.03, "cor_fundo": "black"}
+}
+
+#Variaveis Globais
+pontos = 0
+recorde = 0
+velocidade_jogo = 0.1
+jogo_pausado = False
+jogo_ativo = False
+dificuldade_atual = "2"
+
+#Função para carregar o recorde do arquivo
+def carregar_recorde():
+    global recorde
+    try:
+        if os.path.exists(ARQUIVO_RECORDE):
+            with open(ARQUIVO_RECORDE, "r") as arquivo:
+                recorde = int(arquivo.read().strip())
+    except:
+        recorde = 0
+
+#Função para salvar o recorde no arquivo
+def salvar_recorde():
+    global recorde
+    try:
+        with open(ARQUIVO_RECORDE, "w") as arquivo:
+            arquivo.write(str(recorde))
+    except:
+        pass
+
+#função para tocar som
+def tocar_som(tipo):
+    if not SOM_DISPONIVEl:
+        return
+    try:
+        if tipo == "comer":
+            winsound.Beep(800, 100) # Som agudo curto
+        elif tipo == "colisao":
+            winsound.Beep(200, 300) # Som grave longo
+        elif tipo == "recorde":
+            #Melodia de vitória
+            winsound.Beep(523, 100) #Dó
+            winsound.Beep(659, 100) #Mi
+            winsound.Beep(784, 100) #Sol
+            winsound.Beep(1047, 100) #Dó alto
+        elif tipo == "inicio":
+            winsound.Beep(440, 150)
+            winsound.Beep(550, 150)
+            winsound.Beep(660, 200)
+            winsound.Beep(660, 200)
+    except:
+        pass
+
+#Carregar recorde ao iniciar
+carregar_recorde()
+
+#configuração da Tela
+tela = turtle.Screen()
+tela.title("Jogo da Cobrinha - Super Edition")
+tela.bgcolor("black")
+tela.setup(width=600, height=650)
+tela.tracer(0)
+
+# Turtle para tela de inicio/game over
+tela_mensagem = turtle.Turtle()
+tela_mensagem.speed(0)
+tela_mensagem.color("white")
+tela_mensagem.penup
+tela_mensagem.hideturtle()
+
+#configuração da cobrinha
+cabeca = turtle.Turtle()
+cabeca.speed(0)
+cabeca.shape("square")
+cabeca.color("lime")
+cabeca.penup()
+cabeca.goto(0, 0)
+cabeca.direction = "stop"
+
+# configuração da comida
+comida = turtle.Turtle()
+comida.speed(0)
+comida.shape("circle")
+comida.color("red")
+comida.penup()
+comida.goto(0, 100)
+
+#comida especial(bônus)
+comida_bonus = turtle.Turtle
+comida_bonus.speed(0)
+comida_bonus.shape("triangle")
+comida_bonus.color("gold")
+comida_bonus.penup()
+comida_bonus.goto(1000, 1000) # EScondida inicialmente
+comida_bonus.hideturtle()
+comida_bonus_ativa = False
+comida_bonus_tempo = 0 
+
+#segmentos da cobrinha
+segmentos = []
+
+#setup da pontuação
+placar = turtle.Turtle
+placar.speed(0)
+placar.color("yellow")
+placar.penup()
+placar.hideturtle()
+placar.goto(0, 200)
+
+#turtle para iformações extras
+info_extra = turtle.Turtle
+info_extra.speed(0)
+info_extra.color("yellow")
+info_extra.penup()
+info_extra.hideturtle()
+info_extra.goto(0, -310)
+
+#função para atualizar o placar
+def atualizar_placar():
+    placar.clear()
+    placar.write(f"Pontos: {pontos} | Recorde: {recorde} | {DIFICULDADES
+        [dificuldade_atual]['nome']}",
+        align="center", font=("Courier", 18, "bold"))
+        
+    
+#função pára atualizar informação extra
+def atualizar_info():
+    info_extra.clear()
+    info_extra.write("P = Pausar  |  R = Reiniciar | Q = Sair",
+                     align="center", font=("Courier", 12, "normal"))
+    
+#funçao para mostar tela de inicio
+def mostrar_tela_inicio():
+    jogo_ativo = False
+
+    #Escondetr elementos do jogo
+    cabeca.hideturtle()
+    comida.hideturtle()
+    comida_bonus.hideturtle()
+    for seg in segmentos:
+        seg.hideturtle()
+    placar.clear()
+    info_extra.clear()
+
+    tela.bgcolor("black")
+    tela_mensagem.clear()
+    tela_mensagem.goto(0, 150)
+    tela_mensagem.color("lime")
+    tela_mensagem.write("Jogo da cobrinha", align="center", font=
+    ("Courier", 28, "bold"))
+
+    tela_mensagem.goto(0, 80)
+    tela_mensagem.color("white")
+    tela_mensagem.write("Super Edition", align="center", font=("Courier", 18 "italic"))
+
+    tela_mensagem.goto(0, 20)
+    tela_mensagem.color("yellow")
+    tela_mensagem.write(f"record Atual: {recorde} pontos", align="center", font=("Courier", 16,"bold"))
+
+    tela_mensagem.goto(0, -80)
+    tela_mensagem.color("green")
+    tela_mensagem.write("1 - Fácil", align="center", font=("Courier", 14, "normal"))
+
+    tela_mensagem.goto(0, -110)
+    tela_mensagem.color("blue")
+    tela_mensagem.write("2 - Médio", align="center", font=("Courier", 14, "normal"))
+
+    tela_mensagem.goto(0, -140)
+    tela_mensagem.color("red")
+    tela_mensagem.write("3 - Difícil", align="center", font=("Courier", 14, "normal"))
+
+    tela_mensagem.goto(0, -170)
+    tela_mensagem.color("purple")
+    tela_mensagem.write("4 - impossível", align="center", font=("Courier", 14, "normal"))
+
+    tela_mensagem.goto(0, -220)
+    tela_mensagem.color("white")
+    tela_mensagem.write("Pressione o número para começar!" align="center", font=("Courier", 12, "normal"))
+
+    tela.update()
+
+#função para mostar game over
+def mostrar_game_over():
+    global jogo_ativo
+    jogo_ativo = False
+
+    tela_mensagem.clear()
+
+    # Efeito visual de game over
+    tela.bgcolor("dark red")
+    tela.update()
+    time.sleep(0.1)
+    tela.bgcolor("dark red")
+    tela.update()
+    time.sleep(0.1)
+    tela.bgcolor("black")
+
+    tela_mensagem.goto(0, 100)
+    tela_mensagem.color("red")
+    tela_mensagem.write(" GAME OVER", align="center", font=("Courier", 32, "bold"))
+    
+    tela_mensagem.goto(0, 40)
+    tela_mensagem.color("white")
+    tela_mensagem.write("Pontuação Final", align="center", font=("Courier", 20, "bold"))
+
+    tela_mensagem.goto(0, 0)
+    tela_mensagem.color("yellow")
+    tela_mensagem.write("Pontuação", align="center", font=("Courier", 18, "bold"))
+
+    if pontos >= recorde and pontos > 0:
+        
+        tela_mensagem.goto(0, -40)
+        tela_mensagem.color("gold")
+        tela_mensagem.write("Novo recorde!", align="center", font=("Courier", 20, "bold"))
+
+    tela_mensagem.goto(0, -100)
+    tela_mensagem.color("cyan")
+    tela_mensagem.write("Pressione ESPAÇO para jogar novamente", align="center", font=("Courier", 14, "bold"))
+
+    tela_mensagem.goto(0, -130)
+    tela_mensagem.color("white")
+    tela_mensagem.write("Pressione M para o Menu Principal", align="center", font=("Courier", 14, "bold"))
+
+    tela.update()
+
+#Função para iniciar o jogo
+def iniciar_jogo(dificuldade):
+    global pontos, velocidade_jogo, jogo_ativo, jogo_pausado, dificuldade_atual
+    global comida_bonus_ativa, comida_bonus_tempo
+
+    dificuldade_atual = dificuldade
+    velocidade_jogo = DIFICULDADES[dificuldade]["velocidade"]
+
+    tocar_som("inicio")
+
+    #Limpar tela de inicio
+    tela_mensagem.clear()
+
+    #Configurar cor de fundo
+    tela.bgcolor(DIFICULDADES[dificuldade]["cor_fundo"])
+
+    #Resetar variaveis
+    ponto = 0 
+    jogo_pausado = False
+    jogo_ativo = True
+    comida_bonus_ativa = False
+    comida_bonus_tempo = 0
+
+    # Resetar cobrinha
+    cabeca.goto(0, 0)
+    cabeca.direction = "stop"
+    cabeca.showturtle()
+
+    #Limpar segmentos
+    for segmento in segmentos:
+        segmento.hideturtle()
+    segmentos.clear()
+
+    #Resetar comida
+    comida.goto(0, 100)
+    comida.showturtle()
+
+    #esconder comida especial
+    comida_bonus.goto(1000, 1000)
+    comida_bonus.hideturtle()
+
+    
