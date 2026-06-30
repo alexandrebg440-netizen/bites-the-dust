@@ -1,0 +1,93 @@
+import face_recognition
+import cv2
+import os
+import numpy as np 
+
+#pasta onde estão as imagens cadastradas
+CAMINHO_BANDO = os.path.join(os.path.dirname(__file__), "Banco")
+
+rosto_conhecidos = []
+nomes = []
+
+if not os.path.isdir(CAMINHO_BANDO):
+    print(f"A pasta '{CAMINHO_BANDO}' não foi encoontrada.")
+    raise SystemExit(1)
+
+#Carrega as imagens do banco
+for arquivo in os.path.listdir(CAMINHO_BANDO):
+    caminho = os.path.join(CAMINHO_BANDO, arquivo)
+
+    if not os.path.isfile(caminho):
+        continue
+
+    imagem = face_recognition.load_image_file(caminho)
+    codificacao = face_recognition.face_encodings(imagem)
+
+    if len(codificacao) > 0:
+        rosto_conhecidos.append(codificacao[0])
+        nomes.append(os.path.splitext(arquivo)[0])
+
+if len(rosto_conhecidos) == 0:
+    print(f"Nenhum rosto valido foi encontrado em '{CAMINHO_BANDO}'.")
+    raise SystemExit(1)
+
+print("Banco carregado")
+
+# Webcam
+camera = cv2.VideoCapture(0)
+
+if not camera.isOpened():
+    print("Não foi possivel acessar a webcam.")
+    raise SystemExit(1)
+
+while True:
+    ret, frame = camera.read()
+
+    if not ret:
+        print("Falha ao ler imagem da webcam")
+        break
+
+    rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+
+    locais = face_recognition.face_locations(rgb)
+    codigos = face_recognition.face_encoding(rgb, locais)
+
+    for (top, right, botton, left), codigo in zip(locais, codigos):
+
+        resultados = face_recognition.compare_faces(
+            rosto_conhecidos,
+            codigo,
+            tolerance=0.5
+        )
+
+        nome = "Desconhecido"
+
+        distancias = face_recognition.face_distance(
+            rosto_conhecidos,
+            codigo
+        )
+
+        if len(distancias) > 0:
+            indice = np.argmin(distancias)
+
+            if resultados[indice]:
+                nome = nomes[indice]
+
+        cv2.rectangle(frame, (left, top), (right, botton), (0,255,0), 2)
+        cv2.putText(
+            frame,
+            nome,
+            (left, top - 10),
+            cv2.FONT_HERSHEY_SMPLEX,
+            0.8,
+            (0,255,0),
+            2
+        )
+    
+    cv2.imshow("Biometria Facial", frame)
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+camera.release()
+cv2.destroyAllWindows()
