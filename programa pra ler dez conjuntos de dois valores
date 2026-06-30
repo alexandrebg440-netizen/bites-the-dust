@@ -1,0 +1,22 @@
+#Faça um programa que leai dez conjuntos de dois valores representando o numero do aluno e o segundo representando a sua altura.Encontrando o aluno mais alto e o mais baixo.Mostre o numero do alhuno mais alto e o numero do mais baixo, junto com suas alturas
+
+cods = []
+heights = []
+
+for i in range (10):
+    print(f"Aluno n {i+1}")
+    code = int(input("Digite o codigo: "))
+    height = float(input("Digite sua altura: "))
+
+    cods.append(code)
+    heights.append(height)
+
+tall = heights.index(max(heights))
+short = heights.index(min(heights))
+
+print(
+    f"Código do mais alto: {cods[tall]}\n"
+    f"Altura do mais alto: {max(heights)}\n"
+    f"Código do mais baixo: {cods[short]}\n"
+    f"Altura do mais baixo: {min(heights)}"
+)
