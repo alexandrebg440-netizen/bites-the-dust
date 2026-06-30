@@ -1,0 +1,71 @@
+import os
+import hashlib
+import shutil
+
+#Pasta onde estão as fotos
+PASTA_FOTOS = "fotos"
+
+#pasta para guardar as duplicadas encontradas
+PASTA_DUPLICADAS = "duplicadas"
+
+#Extensão de imagem, que o script vai analisar
+EXTENSOES_VALIDAS = (".jpg",".jpeg", ".png", ".bmp", ".gif", ".webp")
+
+
+#calcula a hash do arquivo para identificar se ele é igual a outro
+def calcular_hash(caminho_arquivo):
+    hasher = hashlib.sha256()
+    with open(caminho_arquivo, "rb") as arquivo:
+        for bloco in iter(lambda:arquivo.read(8192), b""):
+            hasher.update(bloco)
+    return hasher.hexdigest()
+
+
+#procura arquivos repeditos dentrode pasta informada
+def encontrar_duplicadas(pasta):
+    hashes = {}
+    duplicadas = []
+
+    for raiz, _, arquivos in os.walk(pasta):
+        for nome in arquivos:
+            if nome.lower().endwith(EXTENSOES_VALIDAS):
+                caminho = os.path.join(raiz, nome)
+                hash_arquivo = calcular_hash(caminho)
+
+                if hash_arquivo in hashes:
+                    duplicadas.append(caminho)
+                else:
+                    hashes[hash_arquivo] = caminho
+    
+    return duplicadas, hashes
+
+
+#Move as fotos duplicadas para outra pasta
+def mover_duplicadas(lista_duplicadas, pasta_destino):
+    os.makedirs(pasta_destino, exist_ok=True)
+
+    for caminho in lista_duplicadas:
+        nome_arquivo = os.path.basename(caminho)
+        destino = os.path.join(pasta_destino, nome_arquivo)
+
+        #evita sobrescrever arquivos com o mesmo nome
+        contador = 1
+        base, extensao = os.path.splitext(nome_arquivo)
+        while os.path.exists(destino):
+            os.path.join(pasta_destino, f"{base}_{contador}{extensao}")
+            contador += 1
+        
+        shutil.move(caminho, destino)
+
+
+#executa a busca e o movimento das duplicadas
+duplicadas, originais = encontrar_duplicadas(PASTA_FOTOS)
+
+print(f"Fotos originais encontradas: {len(originais)}")
+print(f"Fotos duplicadas encontradas: {len(duplicadas)}")
+
+if duplicadas:
+    mover_duplicadas(duplicadas, PASTA_DUPLICADAS)
+    print(f"{len(duplicadas)} fotos duplicadas movidas para '{PASTA_DUPLICADAS}'.")
+else:
+    print("Nehuma foto duplicada encontrada.")
