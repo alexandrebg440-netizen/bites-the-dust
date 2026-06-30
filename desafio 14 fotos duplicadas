@@ -3,7 +3,7 @@ import hashlib
 import shutil
 
 #Pasta onde estão as fotos
-PASTA_FOTOS = "fotos"
+PASTA_FOTOS = "C:/Users/AlexandreBorgesGalva/Pictures/Nova pasta"
 
 #pasta para guardar as duplicadas encontradas
 PASTA_DUPLICADAS = "duplicadas"
@@ -28,7 +28,7 @@ def encontrar_duplicadas(pasta):
 
     for raiz, _, arquivos in os.walk(pasta):
         for nome in arquivos:
-            if nome.lower().endwith(EXTENSOES_VALIDAS):
+            if nome.lower().endswith(EXTENSOES_VALIDAS):
                 caminho = os.path.join(raiz, nome)
                 hash_arquivo = calcular_hash(caminho)
 
