@@ -1,0 +1,144 @@
+#Sistema bancario com clientes, ssalvando em TXT
+# saque usando cedulas de 1, 2, 5, 10, 20, 50 e 100
+
+ARQUIVO = "clientes.txt"
+
+#==============================
+# Funções de arquivo / clientes
+#==============================
+
+#carrega os clientes do arquivo TXT
+def carregar_clientes():
+    clientes = {}
+    try:
+        with open(ARQUIVO, "r", encoding="utf-8") as arquivo:
+            for linha in arquivo:
+                nome, saldo = linha.strip().split(",")
+                clientes[nome] = float(saldo)
+    except FileNotFoundError:
+        pass 
+    # Se o arquivo não existir, retorna uma lista vazia
+    return clientes
+
+#salva os clientes no arquivo TXT
+def salvar_clientes(clientes):
+    with open(ARQUIVO, "w", encoding="utf-8") as arquivo:
+        for nome, saldo in clientes.items():
+            arquivo.write(f"{nome},{saldo}\n")
+
+#==============================
+# Funções de interface / menu
+#==============================
+
+def mostrar_menu():
+    print("\n=== Sistema Bancário ===")
+    print("1. Criar cliente")
+    print("2. Consultar saldo")
+    print("3. Depositar")
+    print("4. Sacar")
+    print("5. Sair")
+
+#==================================
+# Funções de operações bancárias    
+#==================================
+
+# Cadastar novo cliente
+def criar_cliente(clientes):
+    nome = input("Nome do cliente: ")
+
+    if nome in clientes:
+        print("Cliente já existe.")
+    else:
+        clientes[nome] = 0.0
+        salvar_clientes(clientes)
+        print(f"Cliente {nome} criado com sucesso.")
+
+# Depositar valor na conta do cliente
+def depositar(clientes):
+    nome = input("Nome do cliente: ")
+    
+    if nome not in clientes:
+        print("Cliente não encontrado.")
+        return
+    
+    valor = float(input("Valor do depósito: "))
+
+    if valor > 0:
+        clientes[nome] += valor
+        salvar_clientes(clientes)
+        print(f"Depósito realizado. Saldo de {nome}: R$ {clientes[nome]:.2f} realizado com sucesso.")
+    else:
+        print("Valor inválido.")
+
+# Função que calcula as cédulas para um saque
+def calcular_cedulas(valor_saque):
+    # Lista de cédulas disponíveis(maior para menor)
+    cedulas = [200, 100, 50, 20, 10, 5, 2, 1]
+
+    print("\nCédulas entregues:")
+    valor_restante = int(valor_saque)
+    
+    for cedula in cedulas:
+        quantidade = valor_restante // cedula #Quantas cédulas dessa cabem
+        if quantidade > 0:
+            print(f"{quantidade} cédula(s) de R$ {cedula}")
+            valor_restante -= quantidade * cedula #Subtrai o valor das cédulas entregues
+
+#Sacar valor de um cliente usando cédulas
+def sacar(clientes):
+    nome = input("Nome do cliente: ")
+
+    if nome not in clientes:
+        print("Cliente não encontrado.")
+        return
+    
+    valor = float(input("Valor do saque: "))
+
+    if valor <= 0:
+        print("Valor inválido.")
+        return
+    
+    if valor > clientes[nome]:
+        print("Saldo insuficiente.")
+        return
+    
+    #Aqui faz o cálculo das cèdulas
+    calcular_cedulas(valor)
+
+    # Atualiza o saldo do cliente
+    clientes[nome] -= valor
+    salvar_clientes(clientes)
+    print(f"Saque realizado. Novo saldo de {nome}: R$ {clientes[nome]:.2f}.")
+
+    # Consultar saldo de um cliente
+def consultar_saldo(clientes):
+    nome = input("Nome do cliente: ")
+
+    if nome in clientes:
+        print(f"Saldo de {nome}: R$ {clientes[nome]:.2f}")
+    else:
+        print(f"Cliente não encontrado.")
+
+#==============================
+# Programa Principal
+#==============================
+
+clientes = carregar_clientes()
+
+while True:
+    mostrar_menu()
+    opcao = input("Escolha uma opção: ")
+
+    if opcao == "1":
+        criar_cliente(clientes)
+    elif opcao == "2":
+        consultar_saldo(clientes)
+    elif opcao == "3":
+        depositar(clientes)
+    elif opcao == "4":
+        sacar(clientes)
+    elif opcao == "5":
+        print("Saindo do sistema.")
+        break
+    else:
+        print("Opção inválida. Tente novamente.")
