@@ -1,0 +1,51 @@
+# Céu_entrelado.py - Versão corrigida
+import numpy as np
+import netplotlib.pyplot as plt
+from netplotlib.animation import FuncAnimation
+
+#Configura a figura
+fig, ax = plt.subplots(figsize=(10,10))
+ax.set_facecolor('black')
+ax.set_xlim(0, 100)
+ax.set_ylim(0, 100)
+ax.exist('off')
+
+#Numero de estrelas
+num_stars = 200
+
+#posições aleatorias
+stars_x = np.random.uniform(0, 100, num_stars)
+stars_y = np.random.uniform(0, 100, num_stars)
+
+# Tamanho aleatórias
+stars_size = np.random.uniform(20, 200, num_stars)
+
+#Brilho inicial
+stars_brightness = np.random.uniform(0.3, 1.0, num_stars)
+
+# Criar o scatter plot
+scatter = ax.scatter(
+    stars_x, stars_y,
+    s=stars_size,
+    c=stars_brightness,
+    cmap='YlOrRd', #escale de amarelo para vermelho
+    vmin=0, vmax=1,
+    edgecolors='none',
+    alpha=0.9
+)
+
+# Função de animação
+def update(frame):
+    global stars_brightness
+
+    #Mudar o brilho suavemente
+    stars_brightness = stars_brightness + np.random.uniform(-0.1, 0.5, num_stars)
+    stars_brightness = np.clip(stars_brightness, 0.2, 1.0) # Mantém o brilho entre 0.2 e 1.0
+
+    # Atualizar cores (que representam brilho)
+    scatter.set_array(stars_brightness)
+
+    return scatter,
+
+#Criar animação
+ani = FuncAnimation(fig, update, frames=500, interval=100, blit=True)
