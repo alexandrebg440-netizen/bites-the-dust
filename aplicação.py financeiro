@@ -1,0 +1,35 @@
+# simulador de aplicação financeira com lucro real
+
+# Dados iniciais
+valor_inicial = 1975.00        # Valor inicial da aplicação
+taxa_juros_mensal = 0.01       # Taxa de juros mensal (1%)
+inflação_mensal = 0.004        # Inflação mensal (0.4%)
+meses = 6
+
+# Calculo do valor final nominal
+valor_final = valor_inicial * (1 + taxa_juros_mensal) ** meses
+
+#lucro nominal
+lucro_nominal = valor_final - valor_inicial
+
+# ajuste pela inflação (valor real)
+fator_inflação = (1 + inflação_mensal) ** meses
+valor_real = valor_final / fator_inflação
+
+#lucro real
+lucro_real = valor_real - valor_inicial
+
+# exibição dos resultados
+print("=" * 40)
+print("Simulador de Aplicação Financeira")
+print("=" * 40)
+print(f"Valor aplicado: R$ {valor_inicial:,.2f}")
+print(f"Prazo: {meses} meses")
+print(f"Rendimento: {taxa_juros_mensal*100:.2f}% ao mês")
+print(f"Inflação: {inflação_mensal*100:.2f}% ao mês")
+print("-" * 40)
+print(f"Valor final nominal: R$ {valor_final:.2f}")
+print(f"Lucro nominal: R$ {lucro_nominal:.2f}")
+print(f"Valor final real: R$ {valor_real:.2f}")
+print(f"Lucro real: R$ {lucro_real:.2f}")
+print("=" * 40)
