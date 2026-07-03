@@ -1,0 +1,61 @@
+# Simulador de investimentos 
+# Compara Tesouro Reserva BB, CDB e LCA com aportes mensais.
+
+def simular(valor_inicial, aporte_mensal, meses, taxa_anual):
+    taxa_mensal = (1+taxa_anual) ** (1/12) - 1
+    saldo = valor_inicial
+
+    for _ in range(meses):
+        saldo *= (1 + taxa_mensal)
+        saldo += aporte_mensal
+
+    return saldo
+
+print('=' * 50)
+print('SIMULADOR DE INVESTIMENTOS')
+print('=' * 50)
+
+valor_inicial = float(input('Valor inicial (R$): '))
+aporte = float(input('Aporte mensal (R$): '))
+meses = int(input('Quantidade de meses: '))
+
+# Taxas anuais estimadas (altere conforme necessário)
+taxas = {
+    'Tesouro Reserva BB': 0.15,  # 15% ao ano
+    'CDB BB': 0.15,                  # 15% ao ano
+    'LCA BB': 0.14                   # Exemplo
+}
+
+print('\nRESULTADOS DA SIMULAÇÃO\n')
+
+melhor = ''
+maior_valor = 0
+
+for nome, taxa in taxas.items():
+    saldo = simular(valor_inicial, aporte, meses, taxa)
+
+    # IR simplificado (nãoaplicado na LCA)
+    if nome != 'LCA BB':
+        lucro = saldo - (valor_inicial + aporte * meses)
+
+        if meses <= 6:
+            ir = lucro * 0.20
+        elif meses <= 12:
+            ir = lucro * 0.175
+        elif meses <= 24:
+            ir = lucro * 0.15
+        else:
+            ir = lucro * 0.15
+
+        saldo -= ir
+
+    print(f'{nome:20} -> R$ {saldo:.2f}')
+
+    if saldo > maior_valor:
+        maior_valor = saldo
+        melhor = nome
+
+print('\n' + '=' * 50)
+print(f'O melhor alternativa: {melhor}')
+print(f'Valor final estimado: R$ {maior_valor:.2f}')
+print('=' * 50)
