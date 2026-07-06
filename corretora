@@ -1,0 +1,137 @@
+import streamlit as st
+import yfinance as yf
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+#=======================
+#CONFIGURAção ddo app
+#======================
+
+st.set_page_config(page_tittle="Simulador de INvestimentos", layout="wide")
+
+st.title("Simulador de Investimentos Inteligente")
+st.weite("Simulação de carteira com ações, ouro, dolar e renda fixa(dados reais).")
+
+#=========================
+#TICKERS (MERCADO GLOBAL)
+#=========================
+
+TICKERS = {
+    "Ações (S&P500)": "SPY",
+    "Ouro": "GLD",
+    "Dólar": "UUP",
+    "Renda Fixa":"BND"
+}
+
+#=========================
+#perfil
+#=========================
+
+PERFIS = {
+    "Conservador": {"Spy": 0.10, "GLD": 0.10, "UUP": 0.10, "BND": 0.70},
+    "Moderado": {"Spy": 0.25, "GLD": 0.1, "UUP": 0.15, "BND": 0.50},
+    "Agressivo": {"Spy": 0.40, "GLD": 0.10, "UUP": 0.20, "BND": 0.30}
+}
+
+#==============================
+#Inputs
+#==============================
+
+col1, col2, col3 = st.colums(3)
+
+with col1:
+    inicial = st.number_input("Valor inicial (R$)", value=10000)
+
+with col2:
+    aporte = st.number_input("Aporte mensal (R$)", value=1000)
+
+with col3:
+    anos = st.number_input("Anos", value=10)
+
+perfil_nome = st.selectbox("Perfil do investidor", list(PERFIS.keys()))
+
+rodar = st.button("Rodar simulação")
+
+#========================
+#Dados reais
+#========================
+
+@st.cache_data
+def baixar_dados():
+    dados = {}
+    for nome, ticker in TICKERS.items():
+        df = yf.download(ticker, period="10y", interval="1mo", progress=False)["Close"]
+        dados[ticker] = df.pct_change() #Usar tickers com chave
+
+    df_completo = pd.concat(dados, axis=1).dropna()
+    df_completo.columns = list(dados.keys())
+    return df_completo
+
+#==============================
+#SIMULAÇÂO
+#==============================
+
+def simular(df, perfil, inicial, aporte, meses):
+    # Limitar ao maximo de dados disponiveis
+    meses = min(meses, len(df))
+
+    saldo = inicial
+    historico = []
+
+    for i in range(meses):
+        retorno = 0
+
+        for ativo in perfil:
+            retorno += perfil[ativo] * df[ativo].iloc[i]
+        
+        saldo = saldo * (1 + retorno) + aporte
+        historico.append(saldo)
+    
+    return historico
+
+#===================
+#Execução
+#====================
+
+if rodar:
+    df = baixar_dados()
+
+    meses = int(anos * 12)
+
+    perfil = PERFIS[perfil_nome]
+
+    resultado = simular(df, perfil, inicial, aporte, meses)
+    #============================
+    #GRafico
+    #============================
+
+    st.subheader("Evolução do patrimonio")
+
+    fig, ax = plt.subplots()
+    ax.plot(resultado, color="green")
+    ax.set_title("Cresimento do patrimonio ao longo do tempo")
+    ax.set_xlabel("meses")
+    ax.set_ylabel("Valor (R$)")
+    ax.grid()
+
+    st.pyplot(fig)
+
+    #====================
+    #resultado final
+    #====================
+
+    st.subheader("Resultado final")
+
+    st.metric("Patrimonio final", f"R$ {resultado[-1]:,.2f}")
+
+    #====================
+    #estatisticas
+    #====================
+
+    ganho = resultado[-1] - inicial - (aporte * meses)
+
+    st.write("Lucro total aproximado: ")
+    st.sucess(f"R$ {ganho:,.2f}")
+
+    st.write(" Simulação baseada em dados historicos reais. não garante retorno futuro")
