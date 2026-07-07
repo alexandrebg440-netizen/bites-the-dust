@@ -1,0 +1,126 @@
+import os
+import random
+import sys
+import time
+
+try:
+    import msvcrt
+except ImportError:
+    msvcrt = None
+
+WIDTH = 70
+HEIGHT = 16
+GROUND_Y = HEIGHT - 3
+PLAYER_X = 8
+
+
+class SonicGame:
+    def __init__(self, demo=False):
+        self.demo = demo
+        self.player_x = PLAYER_X
+        self.player_y = GROUND_Y - 1
+        self.jump_velocity = 0
+        self.is_jumping = False
+        self.obstacles = []
+        self.score = 0
+        self.frame = 0
+
+    def run(self):
+        print("Sonic in Python")
+        print("Press SPACE or UP to jump. Press Q to quit.\n")
+        time.sleep(0.7)
+
+        while True:
+            self.frame += 1
+            self.handle_input()
+            self.update_game()
+            self.render()
+            self.score += 1
+
+            if self.demo and self.frame >= 80:
+                print("\nDemo finished. Score:", self.score)
+                break
+
+            if self.check_collision():
+                print("\nGame Over! Score:", self.score)
+                break
+
+            time.sleep(0.08)
+
+    def handle_input(self):
+        if msvcrt is not None:
+            if msvcrt.kbhit():
+                key = msvcrt.getwch().lower()
+                if key in {"q", "Q"}:
+                    print("\nYou quit the game.")
+                    sys.exit(0)
+                if key in {" ", "w", "i", "\x00"}:
+                    self.jump()
+        else:
+            # Fallback for non-Windows systems.
+            if sys.stdin in (None,):
+                return
+
+    def jump(self):
+        if not self.is_jumping:
+            self.is_jumping = True
+            self.jump_velocity = -2
+
+    def update_game(self):
+        if self.is_jumping:
+            self.player_y += self.jump_velocity
+            self.jump_velocity += 1
+            if self.player_y >= GROUND_Y - 1:
+                self.player_y = GROUND_Y - 1
+                self.is_jumping = False
+
+        if self.frame % 8 == 0:
+            self.obstacles.append({"x": WIDTH - 2, "y": GROUND_Y})
+
+        for obstacle in self.obstacles:
+            obstacle["x"] -= 1
+
+        self.obstacles = [obs for obs in self.obstacles if obs["x"] >= 0]
+
+    def check_collision(self):
+        for obstacle in self.obstacles:
+            if obstacle["x"] == self.player_x and self.player_y >= GROUND_Y - 1:
+                return True
+        return False
+
+    def render(self):
+        os.system("cls" if os.name == "nt" else "clear")
+        grid = [[" " for _ in range(WIDTH)] for _ in range(HEIGHT)]
+
+        for row in range(HEIGHT):
+            for col in range(WIDTH):
+                if row == GROUND_Y:
+                    grid[row][col] = "#"
+
+        for obstacle in self.obstacles:
+            if 0 <= obstacle["x"] < WIDTH:
+                grid[obstacle["y"]][obstacle["x"]] = "@"
+
+        player_row = self.player_y
+        player_col = self.player_x
+        sonic_art = [
+            "   o",
+            "  /|\\",
+            " _/ \\\_",
+            "(o)  "
+        ]
+        art_rows = sonic_art
+        for offset, line in enumerate(art_rows):
+            if 0 <= player_row - offset < HEIGHT:
+                for idx, ch in enumerate(line):
+                    if 0 <= player_col + idx < WIDTH:
+                        grid[player_row - offset][player_col + idx] = ch
+
+        lines = ["".join(row) for row in grid]
+        print("\n".join(lines))
+        print(f"Score: {self.score} | Frame: {self.frame}")
+
+
+if __name__ == "__main__":
+    demo = "--demo" in sys.argv
+    SonicGame(demo=demo).run()
