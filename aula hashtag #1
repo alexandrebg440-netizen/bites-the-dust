@@ -46,35 +46,46 @@ tabela = pandas.read_csv("produtos.csv")
 print(tabela)
 for linha in tabela.index:
     #passo 4: cadastrar 1 produto
+    
     pyautogui.click(x=791, y=257)
-    pyautogui.write("MOLO000251")
+    codigo = str(tabela.loc[linha, "codigo"])
+    pyautogui.write(codigo)
     pyautogui.press("tab")#passar para o proximo
 
     #marca
-    pyautogui.write("logitech")
+    marca = str(tabela.loc[linha, "marca"])
+    pyautogui.write(marca)
     pyautogui.press("tab")#passar para o proximo
 
     #tipo
-    pyautogui.write("Mouse")
+    tipo = str(tabela.loc[linha, "tipo"])
+    pyautogui.write(tipo)
     pyautogui.press("tab")#passar para o proximo
 
     #categoria
+    categoria = str(tabela.loc[linha, "categoria"])
     pyautogui.write("categoria")
     pyautogui.press("tab")#passar para o proximo
 
     #preco
-    pyautogui.write("Preço")
+    preco = str(tabela.loc[linha, "preco_unitario"])
+    pyautogui.write(preco)
     pyautogui.press("tab")#passar para o proximo
 
     #custo
-    pyautogui.write("custo")
+    custo = str(tabela.loc[linha, "custo"])
+    pyautogui.write(custo)
     pyautogui.press("tab")#passar para o proximo
 
     #obs
-    pyautogui.write("obs")
+    obs = str(tabela.loc[linha, "obs"])
+    if obs != "nan":
+         pyautogui.write(obs)
     pyautogui.press("tab") #passar para o proximo
 
-    pyautogui.press("enter")
+    pyautogui.press("enter") #clicou enviar
+
     #voltar para o inicio do site
+    pyautogui.scroll(5000)
     
 #passo 5: repedir o passo 4 até acabar a lista de produtos
