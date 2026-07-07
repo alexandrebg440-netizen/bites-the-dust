@@ -1,0 +1,80 @@
+#como eu posso organizar isso passo a passo do programa
+#passo 1: entrar no sistema da impresa
+#pip install pyautogui
+#passo 2: fazer o login
+#passo 3: abrir a base de dados
+#passo 4: cadastrar o produto
+#passo 5: repedir o passo 4 até acabar a lista de produtos
+
+import pyautogui
+import time
+
+#pyautogui.click  -> clicar 
+#pyautogui.write  -> escreve um textp
+#pyautogui.press  -> apertar uma tecla
+#pyautogui.hotkey -> apertar um atalho
+pyautogui.PAUSE = 1
+link = "https://dlp.hashtagtreinamentos.com/python/intensivao/login"
+#passo 1: entrar no sistema da empresa
+#abrir o navegador
+pyautogui.press("win")
+pyautogui.write("edge")
+pyautogui.press("enter")
+
+pyautogui.write(link)
+pyautogui.press("enter")
+#fazer uma pausa maior pro site carregar
+time.sleep(3) #pyautogui hashtag
+
+#passo 2: fazer o login
+#clicar no campo de email
+pyautogui.click(x=736, y=371)
+pyautogui.write("pythonimpressionaor@gmail.com")
+pyautogui.press("tab") # passar para o proximo tela
+pyautogui.click(x=731, y=464)
+pyautogui.write("antedeguimon")
+pyautogui.press("tab") #passar o botão
+pyautogui.press("enter")
+#fazer um apausa maior pro site carregar
+time.sleep(4)
+
+#passo 3: abrir a base de dados(importar o arquivo)
+#pip install pandas
+import pandas
+
+tabela = pandas.read_csv("produtos.csv")
+print(tabela)
+for linha in tabela.index:
+    #passo 4: cadastrar 1 produto
+    pyautogui.click(x=791, y=257)
+    pyautogui.write("MOLO000251")
+    pyautogui.press("tab")#passar para o proximo
+
+    #marca
+    pyautogui.write("logitech")
+    pyautogui.press("tab")#passar para o proximo
+
+    #tipo
+    pyautogui.write("Mouse")
+    pyautogui.press("tab")#passar para o proximo
+
+    #categoria
+    pyautogui.write("categoria")
+    pyautogui.press("tab")#passar para o proximo
+
+    #preco
+    pyautogui.write("Preço")
+    pyautogui.press("tab")#passar para o proximo
+
+    #custo
+    pyautogui.write("custo")
+    pyautogui.press("tab")#passar para o proximo
+
+    #obs
+    pyautogui.write("obs")
+    pyautogui.press("tab") #passar para o proximo
+
+    pyautogui.press("enter")
+    #voltar para o inicio do site
+    
+#passo 5: repedir o passo 4 até acabar a lista de produtos
