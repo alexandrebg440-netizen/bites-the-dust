@@ -68,7 +68,7 @@ def cadastrar_usuario():
 
     print("Usuario cadastrado com sucesso!")
 
-def listar_usuario():
+def listar_usuarios():
     print("\nUSUÁRIOS")
 
     if len(usuarios) == 0:
@@ -175,7 +175,7 @@ while True:
         cadastrar_usuario()
     
     elif opcao == "4":
-        listar_usuario()
+        listar_usuarios()
 
     elif opcao == "5":
         empretar_livro()
