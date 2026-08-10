@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+       <!--Define o conjunto de caracteres para acentos e simbolos-->
+       <meta charset="UTF-8"/>
+       
+       <!--Faz a pagina se adaptar ao tamanho da tela do celular-->
+       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+       <!--Titulo que aparece na aba do navegador-->
+       <title>aprendendo HTML</title>
+
+        <!--CSS parte que deixa a pagina bonita-->
+        <style> 
+            /*Remove margens padrao e define fontes da pagina*/
+        body {
+            margin: 0;
+            font-family: Arial,  sans-serif;
+            background: #f2f4f8;
+            color: #222;
+            line-height: 1.6 ;  
+            }
+
+        /* cabeçalho da pagina*/
+        header {
+            background: #0077cc;
+            color:white;
+            padding:30px 20px;
+            text-align: center;
+        }
+
+        /*Area principal o conteudo*/
+        main{
+            max-width:900px;
+            margin: 30px auto;
+            padding: 20px;
+        }
+         
+        /* Caixas de conteudo */
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius:12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08) 
+        }
+        /*Titulo*/
+        h1, h2 {
+            margin-top: 0;
+        }
+
+        /*lista*/
+        ul{
+            padding-left:20px;
+        }
+
+        /*Botão*/
+        button{
+            background: #0077cc;
+            color: white;
+            border:none; 
+            padding:12px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover{
+            background: #005fa3;
+        }
+        /* Rodapé */
+        footer{
+            text-align: center;
+            padding: 20px
+            backgound, white;
+            margin-top: 30px;
+            font-size: 14px
+        }
+        </style>
+    </head>
+    <body>
+        <!--CABEÇALHO DA PAGINA-->
+        <header>
+            <h1> Aprendendo HTML do Zero</h1>
+            <p>Uma Pagina simples para exemplificar a estutura de um site</p>
+        </header>
+        
+        <!--Conteudo principal da pagina-->
+        <main>
+
+            <!--Primeira caixa-->
+            <section class="card">
+                <h2> Oque é HTML?</h2>
+                <p>HTML é a linguagem usada para criar a estrutura de paginas na internert.
+                    ela organiza os titulos, textos, imagens, botões e outros elementos
+                </p>
+            </section>
+
+            <!--SEgunda caixa-->
+            <section class="card">
+                <h2>partes principais de uma pagina</h2>
+                <ul>
+                    <li><strong>Header:</strong> parte de cima da pagina</li> 
+                    <li><strong>Main:</strong> conteudo principal</li> 
+                    <li><strong>Footer:</strong> parte de baixo da pagina</li>
+                </ul>    
+            </section>
+
+            <!--Terceira caixa-->
+            <section class="card">
+                <h2> Exemplo de botão</h2>
+                <p> quando o usuario clicar no botão, aparece uma mensagem na tela</p> 
+                <button onclick="alert('Parabens!, Voce clicou no botão.')">
+                    Clique aqui
+                </button>
+            </section>
+        </main>
+
+        <!-- Rodapé da pagina-->
+        <footer>
+            Pagina criada para ensinar HTML de forma simples
+        </footer>
+    </body>
+</html >
