@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Áreas de TI - TI Pro{% endblock %}
+
+{% block content %}
+<section class="section">
+    <h2>Principais áreas de TI</h2>
+    <div class="cards">
+        <article class="card">
+        {% for area in areas %}
+        <h3>{{ area.titulo }}</h3>
+        <p>{{ area.descricao }}</p>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

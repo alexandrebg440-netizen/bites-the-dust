@@ -1,0 +1,8 @@
+## instalar estas blibliotecas
+flask
+Flask-login
+Flask-SQLAlchemy
+Werkzeug
+
+## execute esse comando no terminal
+## pip install -r requeriments

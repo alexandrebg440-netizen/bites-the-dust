@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Contato - TI Pro {% endblock %}
+
+{% block content %}
+<section class="section contato">
+    <h2>Entre em contato</h2>
+    <form method="POST">
+        <input type="text" nome="name" placeholder="Seu nome" required>
+        <input type="email" nome="email" placeholder="Seu e-mail" required>
+        <textarea nome="message" placeholder="Sua mensagem" required></textarea>
+        <button type="submit" class="btn">Enviar</button>
+    </form>
+</section>
+{% endblock %}

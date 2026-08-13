@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Dashboard - TI Pro {% endblock %}
+
+{% block content %}
+<section class="section dashboard">
+    <h2>Painel Administrativo</h2>
+    <p>Bem-vindo, <strong>{{ current_user.username }} </strong>!</p>
+
+    <div class="stats">
+        <div class="stat">
+            <h3>Usuarios</h3>
+            <p>{{ users_count }}</p>
+        </div>
+        <div class="stat">
+            <h3>Mensagens</h3>
+            <p>{{ messades_count }}</p>
+        </div>
+    </div>
+
+    <h3>Mensagens de contato</h3>
+    {% if messages %}
+    <table class="messagen-table">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Mensagem</th>
+                <th>Data</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for msg in messages %}
+            <tr>
+                <td>{{ msg.name }}</td>
+                <td>{{ msg.email}}</td>
+                <td>{{ msg.message }}</td>
+                <td>{{ msg.created_at.strftime('%d/%m%Y %H:%M') }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Nenhuma mensagem recebida.</p>
+    {% endif %}
+</section>
+{% endblock %}
